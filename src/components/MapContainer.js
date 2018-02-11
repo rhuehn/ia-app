@@ -1,7 +1,7 @@
 import React from 'react';
-import {getGoogleKey, Map, Marker, GoogleApiComponent} from './external'
+import {getGoogleKey, Map, Marker, GoogleApiComponent} from '../external'
 
-export class MapContainer extends React.Component {
+class _MapContainer extends React.Component {
     render () {
         return (
             <div>
@@ -23,6 +23,6 @@ export class MapContainer extends React.Component {
     }
 }
 
-export default GoogleApiComponent({
+export const MapContainer = GoogleApiComponent({
     apiKey: getGoogleKey()
-})(MapContainer)
+})(_MapContainer)
