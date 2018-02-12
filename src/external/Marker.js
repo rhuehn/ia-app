@@ -2,51 +2,50 @@ import React from 'react';
 
 export class Marker extends React.Component {
 
-  componentDidUpdate(prevProps) {
-    if ((this.props.map !== prevProps.map) ||
-    (this.props.properties !== prevProps.properties) ||
-    (this.props.mapOn !== prevProps.mapOn)) {
-      this.renderMarker()
-    }
-  }
-
-  renderMarker() {
-    let {
-      map, google, title
-    } = this.props;
-
-    // if the marker has already been drawn, set map on or null
-    if (this.marker) {
-      if (!this.props.mapOn) {
-        this.marker.setMap(null);
-      }
-      else {
-        this.marker.setMap(map)
-      }
-      return
+    componentDidUpdate (prevProps) {
+        // if ((this.props.map !== prevProps.map) ||
+        // (this.props.properties !== prevProps.properties) ||
+        // (this.props.mapOn !== prevProps.mapOn)) {
+        //   this.renderMarker()
+        // }
+        this.renderMarker() // TODO fix above test
     }
 
-    let lat = this.props.position.first()
-    let long = this.props.position.last()
-    let position = new google.maps.LatLng(lat,long);
+    renderMarker () {
+        let {
+            map, google, title
+        } = this.props;
 
-    // if marker does not have mapOn, set visibility to none via
-    // setting the map to null
-    const pref = {
-        map: map,
-        position: position,
-        title:title
-      };
+        // if the marker has already been drawn, set map on or null
+        if (this.marker) {
+            if (!this.props.mapOn) {
+                this.marker.setMap(null);
+            }
+            else {
+                this.marker.setMap(map)
+            }
+            return
+        }
 
-    this.marker = new google.maps.Marker(pref);
-    this.marker.addListener('click', (e) => {
-      this.props.onMarkerClick(this.marker)
-    })
+        let position = new google.maps.LatLng(...this.props.position);
 
-    this.props.addMarker(this.marker)
-  }
+        // if marker does not have mapOn, set visibility to none via
+        // setting the map to null
+        const pref = {
+            map: map,
+            position: position,
+            title: title
+        };
 
-  render() {
-    return null;
-  }
+        this.marker = new google.maps.Marker(pref);
+        this.marker.addListener('click', (e) => {
+            this.props.onMarkerClick(this.marker)
+        })
+
+        this.props.addMarker(this.marker)
+    }
+
+    render () {
+        return null;
+    }
 }
