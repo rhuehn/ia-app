@@ -8,6 +8,13 @@ const
             name: '',
             searching: false,
             error: ''
+        },
+        options: {
+            username: 'username',
+            latmin: -90,
+            latmax: 90,
+            lonmin: -180,
+            lonmax: 180
         }
     },
     composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

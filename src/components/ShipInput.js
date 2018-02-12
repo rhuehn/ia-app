@@ -1,12 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+import {searchShip} from '../actions'
 
-const mapState = ({ship: {name}}) => ({name})
+const
+    mapState = ({ship: {name}}) => ({name}),
+    mapDispatch = dispatch => ({
+        searchShip (name) {dispatch(searchShip(name))}
+    })
 
-export const ShipInput = connect(mapState)(class ShipInput extends Component {
+export const ShipInput = connect(mapState, mapDispatch)(class ShipInput extends Component {
     state = {name: this.props.name}
 
-    onChange = e =>  this.setState({name: e.target.value})
+    onChange = e => this.setState({name: e.target.value})
+
+    searchShip = () => this.props.searchShip(this.state.name)
 
     render () {
         return (
@@ -17,7 +24,7 @@ export const ShipInput = connect(mapState)(class ShipInput extends Component {
                     value={this.state.name}
                     onChange={this.onChange}
                 />
-                <button>Search</button>
+                <button onClick={this.searchShip}>Search</button>
             </div>
         )
     }
