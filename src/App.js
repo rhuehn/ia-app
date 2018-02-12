@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import './App.css'
 import {MapContainer, ShipInput} from './components'
 
-class App extends Component {
+export const App = class extends Component {
     render () {
         return (
             <div className="App">
@@ -15,5 +15,3 @@ class App extends Component {
         )
     }
 }
-
-export default App
