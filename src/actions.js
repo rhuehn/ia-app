@@ -1,30 +1,40 @@
-const fetchData = ({username, latmin, latmax, lonmin, lonmax}) => fetch(
-    `\
-http://data.aishub.net/ws.php?username=${username}\
-&format=1&output=json&compress=0\
-&latmin=${latmin}\
-&latmax=${latmax}\
-&lonmin=${lonmin}\
-&lonmax=${lonmax}\
-`,
-    {'mode': 'no-cors'}
-)
-
 export const
     SET_DATA = 'SET_DATA',
     setData = data => ({type: SET_DATA, data}),
     SET_ERR = 'SET_ERR',
     setErr = err => ({type: SET_ERR, err}),
-    searchShip = name => async (dispatch, getState) => {
-        console.log(`search for ${name}`)
-        // const
-        //     {options} = getState(),
-        //     response = await fetchData(options)
-        // if (response.ok)
-        //     dispatch(setData(await response.json()))
-        // else
-        //     dispatch(setErr(response.statusText))
+    fetchData = () => async (dispatch, getState) => {
+//         const {username, latmin, latmax, lonmin, lonmax} = getState()
+//         const response = await fetch(
+//             `\
+// http://data.aishub.net/ws.php?username=${username}\
+// &format=1&output=json&compress=0\
+// &latmin=${latmin}\
+// &latmax=${latmax}\
+// &lonmin=${lonmin}\
+// &lonmax=${lonmax}\
+// `,
+//             {'mode': 'no-cors'}
+//         )
+//         if (response.ok)
+//             dispatch(setData(await response.json()))
+//         else
+//             dispatch(setErr(response.statusText))
         dispatch(setData(testData))
+    },
+    SET_SHIP = 'SET_SHIP',
+    setShip = (ship, marker) => ({type: SET_SHIP, ship, marker}),
+    shipMarker = ({MMSI, NAME, LONGITUDE, LATITUDE}) => ({
+        key: MMSI,
+        title: NAME,
+        position: [Number(LONGITUDE), Number(LATITUDE)]
+    }),
+    searchShip = name => async (dispatch, getState) => {
+        const {data} = getState()
+        if (data) {
+            const ship = data.find(s => s.NAME.toUpperCase() === name.toUpperCase())
+            if (ship) dispatch(setShip(ship, shipMarker(ship)))
+        }
     }
 
 const testData = [

@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {searchShip} from '../actions'
 
 const
-    mapState = ({ship: {name}}) => ({name}),
+    mapState = ({name}) => ({name}),
     mapDispatch = dispatch => ({
         searchShip (name) {dispatch(searchShip(name))}
     })

@@ -1,14 +1,16 @@
 import {createStore, applyMiddleware, compose} from "redux"
 import reducer from "./reducer"
 import thunk from 'redux-thunk'
+import {fetchData} from './actions'
 
 const
     initialState = {
-        ship: {
-            name: '',
-            searching: false,
-            error: ''
-        },
+        name: '',
+        loading: true,
+        error: false,
+        data: [],
+        ship: undefined,
+        marker: undefined,
         options: {
             username: 'username',
             latmin: -90,
@@ -25,3 +27,4 @@ export const store = createStore(
     composeEnhancers(applyMiddleware(thunk))
 )
 
+store.dispatch(fetchData())
